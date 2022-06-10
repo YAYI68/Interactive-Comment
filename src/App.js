@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import styled, { createGlobalStyle } from 'styled-components'
+import { createContext, useState } from 'react';
+import AllComment from './components/Comment/AllComment';
+import Display from './components/Display/Display';
+import commentData from './data.json';
+
+
+let allComments = commentData
+
+
+export const AppData = createContext()
+
+
+const GlobalStyle = createGlobalStyle`
+    body{
+      background-color: white;
+    }
+`
+
+const Container = styled.div`
+ width: 100%;
+ height: 100%;
+ background-color: aliceblue;
+ display:flex;
+ flex-direction:column;
+`
+
 
 function App() {
+  const [show,setShow] = useState(false);
+  const val= {
+    show,
+    setShow,
+    allComments
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <AppData.Provider  value={val} >
+      <Container>
+        <AllComment />
+      </Container>
+      <Display />
+    </AppData.Provider>
+    </>
   );
 }
 
